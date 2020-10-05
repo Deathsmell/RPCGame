@@ -1,17 +1,16 @@
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeyException {
+
+    public static void main(String[] args) {
         if (args.length % 2 != 1 || args.length < 3) {
-            throw new RuntimeException("Incorrect total number args " + args.length);
+            throw new IllegalArgumentException("Incorrect total number args " + args.length);
         }
         long uniqueCount = Arrays.stream(args).distinct().count();
         if (args.length != uniqueCount) {
-            throw new RuntimeException("You inputted not unique arg");
+            throw new IllegalArgumentException("You inputted not unique arg");
         }
 
         SecureRandom random = new SecureRandom();
@@ -20,10 +19,10 @@ public class Main {
         String hmac = Hmac.generateHmac(args[randomCompChoice], key);
         System.out.printf("HMAC: %s\n", hmac);
 
-        Scanner scanner = new Scanner(System.in);
         String menu = generateMenu(args);
         int playerChoice = 0;
         System.out.println(menu);
+        Scanner scanner = new Scanner(System.in);
         do {
             if (scanner.hasNextInt()) {
                 playerChoice = scanner.nextInt();
@@ -49,7 +48,7 @@ public class Main {
         scanner.close();
 
         System.out.printf("You %s!", areYouWiningSon(args, randomCompChoice, playerChoice));
-        System.out.printf("\nHMAC key: %s", key);
+        System.out.printf("\nHMAC key: %s\n", key);
     }
 
     private static String areYouWiningSon(String[] args, int comp, int player) {
