@@ -43,6 +43,7 @@ public class Main {
                 }
             } else {
                 System.out.println("Ups. Incorrect input. Please try again: ");
+                scanner.next();
             }
         } while (scanner.hasNext());
         scanner.close();
